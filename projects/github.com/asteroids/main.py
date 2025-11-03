@@ -10,6 +10,9 @@ def main():
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     player_x_start = (SCREEN_WIDTH / 2)
     player_y_start = (SCREEN_HEIGHT / 2)
+    updatable = pygame.sprite.Group()
+    drawable = pygame.sprite.Group()
+    Player.containers = (updatable, drawable)
     player = Player(player_x_start, player_y_start)
     print("Starting Asteroids!")
     print(f"Screen width: {SCREEN_WIDTH}")
@@ -20,7 +23,9 @@ def main():
             if event.type == pygame.QUIT:
                 return
         screen.fill("black")
-        player.draw(screen)
+        for item in drawable:
+            item.draw(screen)
+        updatable.update(dt)
         pygame.display.flip()
         dt = ((fpsClock.tick(60))/1000)
 
